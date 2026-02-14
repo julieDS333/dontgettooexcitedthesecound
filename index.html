@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE COMPATIBILITY RITUAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Old+Standard+TT:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a0f1a;
-            --parchment: #f4e1d2;
-            --gold: #d4af37;
-            --caramel: #c6893f;
-            --error: #af2b2b;
+            --bg-dark: #2a1a12;
+            --parchment: #e8dab2;
+            --gold: #b8914b;
+            --error-red: #5e1a1a;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--parchment);
+            background-color: var(--bg-dark);
+            color: #2a1a12;
             font-family: 'Old Standard TT', serif;
             display: flex;
             align-items: center;
@@ -27,16 +26,14 @@
             text-align: center;
         }
 
-        .bg-element {
+        .chocolat-bg {
             position: absolute;
+            width: 80px;
             pointer-events: none;
-            opacity: 0.3;
-            animation: drift 14s linear infinite;
+            opacity: 0.6;
+            animation: drift 12s linear infinite;
             z-index: 1;
         }
-
-        .heart { color: var(--caramel); filter: drop-shadow(0 0 5px var(--gold)); }
-        .card { filter: sepia(1) saturate(0.5); }
 
         @keyframes drift {
             0% { transform: translateY(110vh) rotate(0deg); }
@@ -46,55 +43,49 @@
         #quiz-container {
             position: relative;
             z-index: 10;
-            background: rgba(26, 15, 26, 0.95);
-            padding: 40px;
-            border: 4px double var(--gold);
+            background: var(--parchment);
+            padding: 30px;
+            border: 8px double var(--gold);
+            width: 90%;
             max-width: 450px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            box-shadow: 0 0 40px rgba(0,0,0,0.7);
         }
 
-        h1, h2 { font-family: 'Cinzel', serif; font-variant: small-caps; letter-spacing: 2px; color: var(--gold); }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; color: #2a1a12; }
+        h2 { font-size: 1.6rem; line-height: 1.3; }
+        p { font-size: 1.2rem; }
         
-        .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+        .btn-group { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
 
         button {
-            padding: 15px;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--parchment);
+            padding: 18px;
+            background: #fdf5e6;
+            border: 2px solid var(--gold);
+            color: #2a1a12;
             cursor: pointer;
-            font-family: 'Cinzel', serif;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            transition: 0.3s;
         }
 
-        button:hover { background: var(--gold); color: var(--bg); font-weight: bold; }
-
-        .snow-splash {
-            position: fixed;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            background: radial-gradient(circle, #fff 10%, rgba(255,255,255,0.8) 40%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            pointer-events: none;
-        }
-
-        @keyframes splat {
-            0% { width: 0; height: 0; opacity: 1; }
-            50% { width: 150vw; height: 150vw; opacity: 0.9; }
-            100% { width: 200vw; height: 200vw; opacity: 0; }
-        }
+        button:hover { background: var(--gold); color: white; }
 
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.85);
             z-index: 100;
             align-items: center; justify-content: center;
+        }
+
+        .modal-content {
+            background: #3d1c1c;
+            padding: 30px;
+            border: 4px solid var(--gold);
+            color: var(--parchment);
+            max-width: 85%;
         }
     </style>
 </head>
@@ -103,7 +94,7 @@
     <div id="quiz-container">
         <div id="content">
             <h1>Free Valentine's Test</h1>
-            <p style="font-style: italic;">A spiritual evaluation of your compatibility.</p>
+            <p><i>A spiritual evaluation of your compatibility.</i></p>
             <div class="btn-group">
                 <button onclick="nextStep(2)">I AM READY</button>
                 <button onclick="nextStep(2)">I AM READY BUT SCARED</button>
@@ -112,10 +103,10 @@
     </div>
 
     <div id="error-modal" class="modal">
-        <div style="padding: 30px; border: 1px solid var(--error); color: var(--error); background: #1a0f1a; max-width: 80%;">
-            <h2 style="color: var(--error);">JUDGMENT: FALSE</h2>
-            <p id="error-msg" style="font-family: 'Old Standard TT', serif; font-style: italic;"></p>
-            <button onclick="closeModal()" style="border-color: var(--parchment); color: var(--parchment);">REPENT & RETRY</button>
+        <div class="modal-content">
+            <h2 style="color: var(--gold);">JUDGMENT: FALSE</h2>
+            <p id="error-msg"></p>
+            <button onclick="closeModal()" style="margin-top:20px;">REPENT & RETRY</button>
         </div>
     </div>
 
@@ -124,14 +115,14 @@
             2: {
                 q: "Fighting should not be the core of a healthy relationship?",
                 btn1: "RIGHT",
-                msg1: "FALSE. We both know the only conflict resolution we recognize is a snowball to the face followed by a $25 hotel bar cocktail.",
+                msg1: "FALSE. I only express myself through snowball fights.",
                 btn2: "WRONG",
                 next: 3
             },
             3: {
-                q: "A healthy relationship should ensure both people are comfortable with their opinions?",
+                q: "A healthy relationship should ensure both people are comfortable with their opinions and emotions?",
                 btn1: "RIGHT",
-                msg1: "FALSE. If I stop making fun of your outfit for 5 minutes, that's when you should actually be worried. Bullying is love.",
+                msg1: "FALSE. Bullying is the only form of love and both parties should stay on their toes.",
                 btn2: "WRONG",
                 next: 4
             },
@@ -147,26 +138,20 @@
         function nextStep(step) {
             const container = document.getElementById('content');
             if (step === 5) {
-                const splat = document.createElement('div');
-                splat.className = 'snow-splash';
-                splat.style.animation = 'splat 0.8s forwards';
-                document.body.appendChild(splat);
-                
-                setTimeout(() => {
-                    container.innerHTML = `
-                        <h1 style="color:var(--gold); font-size: 1.3rem;">THE PICKLE JUICE PRIESTESS</h1>
-                        <p>If you came this far, love is around the corner.<br>(No need to check all the corners)</p>
-                        <p style="margin-top:20px; border-top: 1px solid var(--gold); padding-top: 15px; font-style: italic;">
-                            The cards have spoken: meet me at our "living room" at the Freehand. 🍸
-                        </p>
-                    `;
-                }, 300);
+                container.innerHTML = `
+                    <h1>CONGRATS</h1>
+                    <p>If you came this far, love is around the corner.</p>
+                    <p><small>(No need to check all the corners)</small></p>
+                    <div class="btn-group">
+                        <button onclick="window.location.href='https://share.google/UF03CIgukSmqNED5b'">THE CORNER</button>
+                    </div>
+                `;
                 return;
             }
 
             const data = steps[step];
             container.innerHTML = `
-                <h2 style="font-size: 1.1rem; line-height: 1.4;">${data.q}</h2>
+                <h2>${data.q}</h2>
                 <div class="btn-group">
                     <button onclick="showError('${data.msg1}')">${data.btn1}</button>
                     <button onclick="nextStep(${data.next})">${data.btn2}</button>
@@ -181,15 +166,15 @@
 
         function closeModal() { document.getElementById('error-modal').style.display = 'none'; }
 
-        for(let i=0; i<20; i++) {
-            const el = document.createElement('div');
-            el.className = i % 2 === 0 ? 'bg-element card' : 'bg-element heart';
-            el.innerHTML = i % 2 === 0 ? '🃏' : '🤎'; 
-            el.style.left = Math.random() * 100 + 'vw';
-            el.style.fontSize = (Math.random() * 20 + 20) + 'px';
-            el.style.animationDuration = (Math.random() * 8 + 10) + 's';
-            el.style.animationDelay = (Math.random() * 10) + 's';
-            document.body.appendChild(el);
+        // Generate floating CHOCOLAT.png
+        for(let i=0; i<10; i++) {
+            const img = document.createElement('img');
+            img.src = 'CHOCOLAT.png';
+            img.className = 'chocolat-bg';
+            img.style.left = Math.random() * 90 + 'vw';
+            img.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            img.style.animationDelay = (Math.random() * 5) + 's';
+            document.body.appendChild(img);
         }
     </script>
 </body>
