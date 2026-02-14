@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE COMPATIBILITY RITUAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Old+Standard+TT:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a0f1a;
+            --parchment: #f4e1d2;
+            --gold: #d4af37;
+            --caramel: #c6893f;
+            --error: #af2b2b;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--parchment);
+            font-family: 'Old Standard TT', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .bg-element {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: drift 14s linear infinite;
+            z-index: 1;
+        }
+
+        .heart { color: var(--caramel); filter: drop-shadow(0 0 5px var(--gold)); }
+        .card { filter: sepia(1) saturate(0.5); }
+
+        @keyframes drift {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        #quiz-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(26, 15, 26, 0.95);
+            padding: 40px;
+            border: 4px double var(--gold);
+            max-width: 450px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+        }
+
+        h1, h2 { font-family: 'Cinzel', serif; font-variant: small-caps; letter-spacing: 2px; color: var(--gold); }
+        
+        .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+
+        button {
+            padding: 15px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--parchment);
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--gold); color: var(--bg); font-weight: bold; }
+
+        .snow-splash {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: radial-gradient(circle, #fff 10%, rgba(255,255,255,0.8) 40%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        @keyframes splat {
+            0% { width: 0; height: 0; opacity: 1; }
+            50% { width: 150vw; height: 150vw; opacity: 0.9; }
+            100% { width: 200vw; height: 200vw; opacity: 0; }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
+            align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="quiz-container">
+        <div id="content">
+            <h1>Free Valentine's Test</h1>
+            <p style="font-style: italic;">A spiritual evaluation of your compatibility.</p>
+            <div class="btn-group">
+                <button onclick="nextStep(2)">I AM READY</button>
+                <button onclick="nextStep(2)">I AM READY BUT SCARED</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-modal" class="modal">
+        <div style="padding: 30px; border: 1px solid var(--error); color: var(--error); background: #1a0f1a; max-width: 80%;">
+            <h2 style="color: var(--error);">JUDGMENT: FALSE</h2>
+            <p id="error-msg" style="font-family: 'Old Standard TT', serif; font-style: italic;"></p>
+            <button onclick="closeModal()" style="border-color: var(--parchment); color: var(--parchment);">REPENT & RETRY</button>
+        </div>
+    </div>
+
+    <script>
+        const steps = {
+            2: {
+                q: "Fighting should not be the core of a healthy relationship?",
+                btn1: "RIGHT",
+                msg1: "FALSE. We both know the only conflict resolution we recognize is a snowball to the face followed by a $25 hotel bar cocktail.",
+                btn2: "WRONG",
+                next: 3
+            },
+            3: {
+                q: "A healthy relationship should ensure both people are comfortable with their opinions?",
+                btn1: "RIGHT",
+                msg1: "FALSE. If I stop making fun of your outfit for 5 minutes, that's when you should actually be worried. Bullying is love.",
+                btn2: "WRONG",
+                next: 4
+            },
+            4: {
+                q: "To build a strong foundation, a happy couple should:",
+                btn1: "Slowly get to know each other",
+                msg1: "FALSE. We knew too much when you started mentioning pickle juice.",
+                btn2: "Eat quick all day",
+                next: 5
+            }
+        };
+
+        function nextStep(step) {
+            const container = document.getElementById('content');
+            if (step === 5) {
+                const splat = document.createElement('div');
+                splat.className = 'snow-splash';
+                splat.style.animation = 'splat 0.8s forwards';
+                document.body.appendChild(splat);
+                
+                setTimeout(() => {
+                    container.innerHTML = `
+                        <h1 style="color:var(--gold); font-size: 1.3rem;">THE PICKLE JUICE PRIESTESS</h1>
+                        <p>If you came this far, love is around the corner.<br>(No need to check all the corners)</p>
+                        <p style="margin-top:20px; border-top: 1px solid var(--gold); padding-top: 15px; font-style: italic;">
+                            The cards have spoken: meet me at our "living room" at the Freehand. 🍸
+                        </p>
+                    `;
+                }, 300);
+                return;
+            }
+
+            const data = steps[step];
+            container.innerHTML = `
+                <h2 style="font-size: 1.1rem; line-height: 1.4;">${data.q}</h2>
+                <div class="btn-group">
+                    <button onclick="showError('${data.msg1}')">${data.btn1}</button>
+                    <button onclick="nextStep(${data.next})">${data.btn2}</button>
+                </div>
+            `;
+        }
+
+        function showError(msg) {
+            document.getElementById('error-msg').innerText = msg;
+            document.getElementById('error-modal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('error-modal').style.display = 'none'; }
+
+        for(let i=0; i<20; i++) {
+            const el = document.createElement('div');
+            el.className = i % 2 === 0 ? 'bg-element card' : 'bg-element heart';
+            el.innerHTML = i % 2 === 0 ? '🃏' : '🤎'; 
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            el.style.animationDuration = (Math.random() * 8 + 10) + 's';
+            el.style.animationDelay = (Math.random() * 10) + 's';
+            document.body.appendChild(el);
+        }
+    </script>
+</body>
+</html>
